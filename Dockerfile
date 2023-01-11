@@ -8,8 +8,7 @@ RUN groupadd -g 99 -r httpd && \
     useradd -u 99 -r -g httpd -s /sbin/nologin -c "Apache HTTP Server" httpd
 
 # Update ownership and permissions for the run directory
-RUN mkdir /run/httpd && \
-    chown -R httpd:httpd /run/httpd && \
+RUN chown -R httpd:httpd /run/httpd && \
     chmod 755 /run/httpd
 
 # Update ownership and permissions for the httpd config file
