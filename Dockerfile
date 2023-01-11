@@ -4,8 +4,8 @@ FROM redhat/ubi8
 RUN yum update -y && yum install -y httpd
 
 # Add a user and group for running httpd
-RUN groupadd -g 48 -r httpd && \
-    useradd -u 48 -r -g httpd -s /sbin/nologin -c "Apache HTTP Server" httpd
+RUN groupadd -g 99 -r httpd && \
+    useradd -u 99 -r -g httpd -s /sbin/nologin -c "Apache HTTP Server" httpd
 
 # Update ownership and permissions for the run directory
 RUN mkdir /run/httpd && \
