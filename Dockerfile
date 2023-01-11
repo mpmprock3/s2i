@@ -1,5 +1,4 @@
-FROM rhel:8
-
+FROM redhat/ubi8
 # Update packages and install httpd
 RUN yum update -y && yum install -y httpd
 
