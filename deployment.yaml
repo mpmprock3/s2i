@@ -38,8 +38,8 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
-      serviceAccountName: httpbin
-      serviceAccount: httpbin
+      serviceAccountName: httpd
+      serviceAccount: httpd
       securityContext: {}
       schedulerName: default-scheduler
   strategy:
