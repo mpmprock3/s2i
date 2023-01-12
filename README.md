@@ -57,6 +57,26 @@ RUN groupadd -g 1000700001 -r httpd && \
 useradd -u 1000700001 -r -g httpd -s /sbin/nologin -c "Apache HTTP Server" httpd
 ```
 
+## Build docker image using dockerfile locally and running locally
+
+```
+#ls
+dockerfile
+
+# docker build -t my-rhel8-httpd .
+
+# docker images
+REPOSITORY            TAG         IMAGE ID      CREATED       SIZE
+my-rhel8-httpd          latest       849e5bb328b6    14 seconds ago   232 MB
+
+# docker tag my-rhel8-httpd quay.io/mapandey/my-rhel8-httpd:latest
+
+# docker push quay.io/mapandey/my-rhel8-httpd:latest
+
+# docker run -p 8081:80 my-rhel8-httpd
+
+```
+
 
 ## Deployment yaml file explanation
 
