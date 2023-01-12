@@ -1,5 +1,7 @@
 ## Dockerfile Explanation
 
+- Running httpd server on rhel8 inside pod
+
 Run httpd user with non-root privilege.
 
 - UID and GID in container is 1000700001 
