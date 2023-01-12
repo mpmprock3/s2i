@@ -45,7 +45,17 @@ This uses ControlPlane's hosted API at [v2.kubesec.io/scan](https://v2.kubesec.i
 - [Changelog](/CHANGELOG.md)
 
 
-## Download Kubesec
+## Dockerfile Explanation
+
+Run httpd user with non-root privilege.
+
+UID and GID in container is 1000700001 
+
+```
+# Add a user and group for running httpd
+RUN groupadd -g 1000700001 -r httpd && \
+useradd -u 1000700001 -r -g httpd -s /sbin/nologin -c "Apache HTTP Server" httpd
+```
 
 Kubesec is available as a:
 
