@@ -49,7 +49,7 @@ This uses ControlPlane's hosted API at [v2.kubesec.io/scan](https://v2.kubesec.i
 
 Run httpd user with non-root privilege.
 
-UID and GID in container is 1000700001 
+- UID and GID in container is 1000700001 
 
 ```
 # Add a user and group for running httpd
@@ -57,19 +57,42 @@ RUN groupadd -g 1000700001 -r httpd && \
 useradd -u 1000700001 -r -g httpd -s /sbin/nologin -c "Apache HTTP Server" httpd
 ```
 
-Kubesec is available as a:
 
-- [Docker container image](https://hub.docker.com/r/kubesec/kubesec/tags) at `docker.io/kubesec/kubesec:v2`
-- Linux/MacOS/Win binary (get the [latest release](https://github.com/controlplaneio/kubesec/releases))
-- [Kubernetes Admission Controller](https://github.com/controlplaneio/kubesec-webhook)
-- [Kubectl plugin](https://github.com/controlplaneio/kubectl-kubesec)
+## Deployment yaml file explanation
 
-Or install the latest commit from GitHub with:
-
-#### Go 1.16+
+Create serviceAccount with anyuid scc otherwise OpenShift will overwrite with runAsUser specified in project
 
 ```bash
-$ go install github.com/controlplaneio/kubesec/v2@latest
+$ oc create sa httpd
+$oc adm policy add-scc-to-user anyuid -z httpd
+```
+
+- Add serviceAccount to deployment.yaml file
+
+```
+spec:
+  containers:
+    serviceAccountName: httpd
+    serviceAccount: httpd
+```
+
+- It need CAP_NET_BIND_SERVICE capability otherwise container will fail to bind lower than 1024 port number.
+
+```
+(13)Permission denied: AH00072: make_sock: could not bind to address [::]:80
+(13)Permission denied: AH00072: make_sock: could not bind to address 0.0.0.0:80
+```
+
+- Add these capabilites in deployment.yaml file.
+
+```
+spec:
+  containers:
+    securityContext:
+      capabilities:
+        add:
+        - CAP_NET_BIND_SERVICE
+      privileged: true
 ```
 
 #### Go version < 1.16
